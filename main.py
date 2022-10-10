@@ -2,8 +2,24 @@ from sympy import *
 import matplotlib.pyplot as plt
 import numpy as np
 x, y = symbols("x y")
-expression = eval(str(input("Enter your expression: ")))
-exp = expand(expression)
+# expression = eval(str(input("Enter your expression: ")))
+expression = list(str(input("Enter your expression: ")))
+evaluated = []
+for i in expression:
+    if i == "x":
+        try:
+            a = eval(evaluated[-1])
+            evaluated.append("*")
+        except:
+            pass
+        
+    elif i == "^":
+        evaluated.append("*")
+        evaluated.append("*")
+        continue
+    
+    evaluated.append(i)
+exp = expand(eval("".join(evaluated)))
 dif = diff(exp,x)
 pprint(dif)
 xvalues = solve(dif)
