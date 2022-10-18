@@ -1,17 +1,23 @@
-from sympy import * 
+# Import our modules that we are using
 import matplotlib.pyplot as plt
 import numpy as np
+from sympy import * 
+
 x, y = symbols("x y")
 # expression = eval(str(input("Enter your expression: ")))
 expression = list(str(input("Enter your expression: ")))
 evaluated = []
 for i in expression:
-    if i == "x":
-        try:
-            a = eval(evaluated[-1])
-            evaluated.append("*")
-        except:
-            pass
+    if i.isalpha():
+        if i == "x":
+            try:
+                a = eval(evaluated[-1])
+                evaluated.append("*")
+            except:
+                pass
+        else:
+            print("Invalid letter, it must be x")
+            exit()
         
     elif i == "^":
         evaluated.append("*")
@@ -19,20 +25,41 @@ for i in expression:
         continue
     
     evaluated.append(i)
-exp = expand(eval("".join(evaluated)))
-dif = diff(exp,x)
+expr = expand(eval("".join(evaluated)))
+dif = diff(expr,x)
 pprint(dif)
 xvalues = solve(dif)
 print(f"x = {xvalues}")
 for i in xvalues:
-    print(f"for {i}")
+    print(f"\nfor {i}")
     print(f"f({i-0.1}) = {dif.subs(x,i-0.1)}")
     print(f"f({i+0.1}) = {dif.subs(x,i+0.1)}")
-    ycoord = exp.subs(x,i)
+    ycoord = expr.subs(x,i)
     print(f"\ny = {ycoord}")
-    print(f"P = ({i},{ycoord})\n")
+    print(f"P = ({i},{ycoord})")
 
+# Create the vectors X and Y
+x = range(100)
+ycoord = [(expr) for x in x ]
+# Create the plot
+fig, ax = plt.subplots()
+ax.plot(x, ycoord)
 
+# Add a title
+plt.title('My first Plot with Python')
+
+# Add X and y Label
+plt.xlabel('x axis')
+plt.ylabel('y axis')
+
+# Add a grid
+plt.grid(alpha=.4,linestyle='--')
+
+# Add a Legend
+plt.legend()
+
+# Show the plot
+plt.show()
 
 # upperbound = float(input("Enter upper bound "))
 # lowerbound = float(input("Enter lower bound "))
