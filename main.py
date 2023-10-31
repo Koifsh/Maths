@@ -61,3 +61,5 @@ def integration():
     area = quad((lambda x: (6 * x - x**2) - (2 * x)),4,0)
     print(area)
     
+while True:
+    integration()
